@@ -52,11 +52,11 @@ tools = [
 funcao_disponivel = {"retorna_cotacao": retorna_cotacao}
 
 def gera_texto(mensagens):
-    resposta=client.chat.completions.create(
-    messages=mensagens,
-    model="gpt-3.5-turbo-0125",
-    tools=tools,
-    tool_choice="auto"
+    resposta = client.chat.completions.create(
+        messages=mensagens,
+        model="gpt-3.5-turbo-0125",
+        tools=tools,
+        tool_choice="auto"
     )
 
     tool_calls = resposta.choices[0].message.tool_calls
@@ -64,7 +64,7 @@ def gera_texto(mensagens):
     # print(tool_calls)
 
     if tool_calls:
-        mensagens.append(resposta.choices[0].message)
+        mensagens.append(resposta.choices[0].message.to_dict())
 
         for tool_call in tool_calls:
             function_name = tool_call.function.name
@@ -84,7 +84,7 @@ def gera_texto(mensagens):
             model="gpt-3.5-turbo-0125",
         )
 
-        mensagens.append(segunda_resposta.choices[0].message)
+        mensagens.append(segunda_resposta.choices[0].message.to_dict())
 
     return mensagens
 
