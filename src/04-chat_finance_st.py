@@ -79,12 +79,12 @@ def gera_texto(mensagens):
                 "content": function_return
             })
 
-            segunda_resposta = client.chat.completions.create(
-                messages=mensagens,
-                model="gpt-3.5-turbo-0125",
-            )
+        segunda_resposta = client.chat.completions.create(
+            messages=mensagens,
+            model="gpt-3.5-turbo-0125",
+        )
 
-            mensagens.append(segunda_resposta.choices[0].message)
+        mensagens.append(segunda_resposta.choices[0].message)
 
     return mensagens
 
@@ -115,4 +115,4 @@ if user_input:
     # Exibe a resposta do chatbot
     ultima_mensagem = st.session_state.mensagens[-1]
     if ultima_mensagem["role"] == "assistant":
-        st.chat_message["assistant"].markdown(ultima_mensagem["content"])
+        st.chat_message("assistant").markdown(ultima_mensagem["content"])
