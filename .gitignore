@@ -407,3 +407,4 @@ FodyWeavers.xsd
 .env
 /.venv/
 /.idea/
+.DS_Store
