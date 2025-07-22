@@ -5,4 +5,5 @@ yfinance
 pandas
 matplotlib
 colorama
-streamlit
+streamlit,
+faker
