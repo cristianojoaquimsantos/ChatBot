@@ -28,8 +28,10 @@ def transcrever_audio(audio):
     """Transcreve o áudio utilizando o modelo Whisper"""
 
     try:
-        wav_data == BytesIO(audio.get_wav_data())
-        wav_data.name = "audio.wav"
+        wav_data = BytesIO(audio.get_wav_data())  # cria o buffer
+        wav_data.name = "audio.wav"               # nome fake para o arquivo
+        wav_data.seek(0)                          # garante ponteiro no início
+
         transcricao = client.audio.transcriptions.create(
             model="whisper-1",
             file=wav_data
@@ -38,6 +40,7 @@ def transcrever_audio(audio):
     except Exception as e:
         print("Erro ao transcrever áudio:", str(e))
         return ""
+
 
 def completa_texto(mensagens):
     """Gera uma resposta com base no histórico de mensagens usando GPT 3.5"""
@@ -54,7 +57,7 @@ def completa_texto(mensagens):
         print("Erro na geração da resposta:", str(e))
         return "Desculpe, não consegui entender."
     
-def cria_audio(texto):
+def criar_audio(texto):
     """Cria um arquivo de áudio a partir do texto utilizando a API do TTS"""
 
     if Path(arquivo_audio).exists():
@@ -71,7 +74,7 @@ def cria_audio(texto):
     except Exception as e:
         print(f"Erro ao criar áudio:", str(e))
 
-def roda_audio():
+def rodar_audio():
     """Reproduz o arquivo de áudio gerado"""
 
     if Path(arquivo_audio).exists():
@@ -100,7 +103,7 @@ def main():
         print(f"Assistente: {mensagens[-1]['content']}")
 
         criar_audio(resposta_texto)
-        roda_audio()
+        rodar_audio()
 
 if __name__ == "__main__":
     main()
